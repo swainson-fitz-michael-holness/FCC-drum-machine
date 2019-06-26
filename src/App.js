@@ -32,7 +32,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      display: ""
+      display: "Hit or type for a drum sound"
     }
   }
 
@@ -67,6 +67,10 @@ class App extends React.Component {
     document.addEventListener("keydown",this.key_play, false);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("keydown",this.key_play, false);
+  }
+
   render() {
     return (
       <div className="App">
@@ -74,15 +78,20 @@ class App extends React.Component {
         <header className="App-header">
           <div id="drum-machine">
             <div id="display">{this.state.display}</div>
-  
-            {
-              trigger.map((el, index) => {
-                return (<div className="drum-pad" id={el + "_pad"} key={index+"_pad"} onClick={(e) => this.playDrum(e)} onKeyDown={this.playKeyDrum}>
-                  {el}
-                  <audio className="clip" id={el} src={soundBank[index]}></audio>
-                </div>)
-              })
-            }
+            <div className="grid-pad">
+
+              {trigger.map((el, index) => {
+              return (<div className="drum-pad" id={el + "_pad"} key={index+"_pad"} onClick={(e) => this.playDrum(e)} onKeyDown={this.playKeyDrum}>
+                {el}
+                <audio className="clip" id={el} src={soundBank[index]}></audio>
+              </div>)
+              })}
+
+            </div>
+            <div>
+              <p className="sig"> coded by Swainson Holness<br/></p>
+            </div>
+            
           </div>
          
         </header>
